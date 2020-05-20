@@ -1,0 +1,57 @@
+from tkinter import *
+import tkinter.font
+from gpiozero import LED
+import time
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+
+ledRed = LED(14)
+ledBlue = LED(17)
+ledGreen = LED(27)
+win = Tk()
+win.title("LED TOGGLE")
+
+
+def ledToggleRed():
+    if ledRed.is_lit:
+       ledRed.off()
+       ledButton["text"] = "Turn Led On"
+    else:
+        ledRed.on()
+        ledButton["text"] = "Turn Led Off"
+        
+def ledToggleBlue():
+    if ledBlue.is_lit:
+       ledBlue.off()
+       ledButton2["text"] = "Turn Led On"
+    else:
+        ledBlue.on()
+        ledButton2["text"] = "Turn Led Off"
+        
+def ledToggleGreen():
+    if ledGreen.is_lit:
+       ledGreen.off()
+       ledButton3["text"] = "Turn Led On"
+    else:
+        ledGreen.on()
+        ledButton3["text"] = "Turn Led Off"
+        
+def close():
+    GPIO.cleanup()
+    win.destroy()
+    
+
+ledButton = Button(win, text="Turn Led On.", fg="red", command=ledToggleRed, bg = 'bisque2',height = 1 ,width = 24)
+ledButton.grid(row=0,column=1)
+
+ledButton2 = Button(win, text="Turn Led On.", fg="blue", command=ledToggleBlue, bg = 'bisque2',height = 1 ,width = 24)
+ledButton2.grid(row=1,column=1)
+
+ledButton3 = Button(win, text="Turn Led On.", fg="green", command=ledToggleGreen, bg = 'bisque2',height = 1 ,width = 24)
+ledButton3.grid(row=2,column=1)
+
+exitButton = Button(win, text="exit.", fg="black", command=close, bg = 'bisque2',height = 1 ,width = 24)
+exitButton.grid(row=3,column=1)
+
+win.protocol("WW_DELETE_WINDOW",close)
+win.mainloop()
